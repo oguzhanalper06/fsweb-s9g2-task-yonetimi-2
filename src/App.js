@@ -4,30 +4,35 @@ import Task from "./Task";
 import TaskHookForm from "./TaskHookForm";
 import PeopleForm from "./PeopleForm";
 import { initialTasks, initialTeam } from "./data";
-import { toast } from 'react-toastify';
-
+import { toast } from "react-toastify";
+import differenceInDays from "date-fns/differenceInDays";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 function App() {
   const [tasks, setTasks] = useState(initialTasks);
   const [team, setTeam] = useState(initialTeam);
 
   function handleTaskSubmit(yeniTask) {
-    setTasks([yeniTask, ...tasks])
+    setTasks([yeniTask, ...tasks]);
   }
 
   function handlePeopleSubmit(yeniKisi) {
-    setTeam([...team, yeniKisi])
+    setTeam([...team, yeniKisi]);
   }
 
   function handleComplete(id) {
     const tasksCopy = [...tasks];
-    const ilgiliTask = tasksCopy.filter(t => t.id === id)[0];
+    const ilgiliTask = tasksCopy.filter((t) => t.id === id)[0];
     ilgiliTask.status = "yapıldı";
     setTasks(tasksCopy);
 
     toast.success(`Tebrikler! "${ilgiliTask.title}" tamamlandı!`);
   }
-
+  const result = differenceInDays(
+    new Date(2023, 2, 26),
+    new Date(2022, 12, 28)
+  );
+  alert(result + " gün fark var");
   return (
     <div className="app">
       <div className="formColumn">
@@ -63,7 +68,6 @@ function App() {
           </div>
         </div>
       </div>
-
     </div>
   );
 }
